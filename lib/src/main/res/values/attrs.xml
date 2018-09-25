@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="libExpandableTextView">
+        <attr name="ept_limitLine" format="integer" />
+        <attr name="ept_textExpand" format="string" />
+        <attr name="ept_textShrink" format="string" />
+        <attr name="ept_textColorExpand" format="color" />
+        <attr name="ept_textColorShrink" format="color" />
+    </declare-styleable>
+</resources>

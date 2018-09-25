@@ -2,6 +2,7 @@ package com.sd.lib.expandable.textview;
 
 import android.content.Context;
 import android.content.res.ColorStateList;
+import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.support.v7.widget.AppCompatTextView;
@@ -23,19 +24,19 @@ public class FExpandableTextView extends AppCompatTextView
     public FExpandableTextView(Context context)
     {
         super(context);
-        init();
+        init(null);
     }
 
     public FExpandableTextView(Context context, AttributeSet attrs)
     {
         super(context, attrs);
-        init();
+        init(attrs);
     }
 
     public FExpandableTextView(Context context, AttributeSet attrs, int defStyleAttr)
     {
         super(context, attrs, defStyleAttr);
-        init();
+        init(attrs);
     }
 
     private SpannableStringBuilder mBuilder;
@@ -46,20 +47,41 @@ public class FExpandableTextView extends AppCompatTextView
     private State mState = State.Shrink;
     private int mLimitLineCount = 2;
 
-    private String mTextShowMore = "展开";
-    private String mTextHideMore = "收起";
+    private String mTextExpand;
+    private String mTextShrink;
 
-    private int mTextColorShowMore = Color.BLUE;
-    private int mTextColorHideMore = Color.RED;
+    private int mTextColorExpand;
+    private int mTextColorShrink;
 
     private boolean mProcess;
-
     private TextView mTextView;
 
-    private void init()
+    private void init(AttributeSet attrs)
     {
         setMovementMethod(LinkMovementMethod.getInstance());
         setHighlightColor(Color.TRANSPARENT);
+
+        if (attrs != null)
+        {
+            final TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.libExpandableTextView);
+
+            mLimitLineCount = a.getInt(R.styleable.libExpandableTextView_ept_limitLine, 2);
+
+            String textExpand = a.getString(R.styleable.libExpandableTextView_ept_textExpand);
+            if (TextUtils.isEmpty(textExpand))
+                textExpand = getResources().getString(R.string.lib_ept_expand);
+            mTextExpand = textExpand;
+
+            String textShrink = a.getString(R.styleable.libExpandableTextView_ept_textShrink);
+            if (TextUtils.isEmpty(textShrink))
+                textShrink = getResources().getString(R.string.lib_ept_shrink);
+            mTextShrink = textShrink;
+
+            mTextColorExpand = a.getInt(R.styleable.libExpandableTextView_ept_textColorExpand, getResources().getColor(R.color.lib_ept_expand));
+            mTextColorShrink = a.getInt(R.styleable.libExpandableTextView_ept_textColorShrink, getResources().getColor(R.color.lib_ept_shrink));
+
+            a.recycle();
+        }
     }
 
     /**
@@ -79,41 +101,41 @@ public class FExpandableTextView extends AppCompatTextView
     /**
      * 设置“更多”字符串
      *
-     * @param textShowMore
+     * @param textExpand
      */
-    public void setTextShowMore(String textShowMore)
+    public void setTextExpand(String textExpand)
     {
-        mTextShowMore = textShowMore;
+        mTextExpand = textExpand;
     }
 
     /**
      * 设置“收起”字符串
      *
-     * @param textHideMore
+     * @param textShrink
      */
-    public void setTextHideMore(String textHideMore)
+    public void setTextShrink(String textShrink)
     {
-        mTextHideMore = textHideMore;
+        mTextShrink = textShrink;
     }
 
     /**
      * 设置“更多”字符串颜色
      *
-     * @param textColorShowMore
+     * @param textColorExpand
      */
-    public void setTextColorShowMore(int textColorShowMore)
+    public void setTextColorExpand(int textColorExpand)
     {
-        mTextColorShowMore = textColorShowMore;
+        mTextColorExpand = textColorExpand;
     }
 
     /**
      * 设置“收起”字符串颜色
      *
-     * @param textColorHideMore
+     * @param textColorShrink
      */
-    public void setTextColorHideMore(int textColorHideMore)
+    public void setTextColorShrink(int textColorShrink)
     {
-        mTextColorHideMore = textColorHideMore;
+        mTextColorShrink = textColorShrink;
     }
 
     private void setTextInternal(CharSequence text)
@@ -237,7 +259,7 @@ public class FExpandableTextView extends AppCompatTextView
      */
     private void processShrink(int originalLineCount)
     {
-        final String textSuffix = mTextShowMore;
+        final String textSuffix = mTextExpand;
         CharSequence textContent = null;
 
         final int stepLength = (int) getPaint().measureText(" ");
@@ -289,7 +311,7 @@ public class FExpandableTextView extends AppCompatTextView
      */
     private void processExpand(int originalLineCount)
     {
-        final String textSuffix = mTextHideMore;
+        final String textSuffix = mTextShrink;
         if (TextUtils.isEmpty(textSuffix))
         {
             setTextInternal(mOriginalText);
@@ -345,7 +367,7 @@ public class FExpandableTextView extends AppCompatTextView
         @Override
         public void updateDrawState(TextPaint ds)
         {
-            ds.setColor(mTextColorShowMore);
+            ds.setColor(mTextColorExpand);
         }
 
         @Override
@@ -360,7 +382,7 @@ public class FExpandableTextView extends AppCompatTextView
         @Override
         public void updateDrawState(TextPaint ds)
         {
-            ds.setColor(mTextColorHideMore);
+            ds.setColor(mTextColorShrink);
         }
 
         @Override
