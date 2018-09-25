@@ -1,4 +1,4 @@
 <resources>
-    <string name="lib_ept_expand">  展开</string>
-    <string name="lib_ept_shrink">  收起</string>
+    <string name="lib_ept_expand">&#160;&#160;展开</string>
+    <string name="lib_ept_shrink">&#160;&#160;收起</string>
 </resources>
