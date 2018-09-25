@@ -247,17 +247,17 @@ public class FExpandableTextView extends AppCompatTextView
 
         if (mState == State.Shrink)
         {
-            processShrink(originalLineCount);
+            processShrinkState(originalLineCount);
         } else
         {
-            processExpand(originalLineCount);
+            processExpandState(originalLineCount);
         }
     }
 
     /**
      * 收起状态下的逻辑
      */
-    private void processShrink(int originalLineCount)
+    private void processShrinkState(int originalLineCount)
     {
         final String textSuffix = mTextExpand;
         CharSequence textContent = null;
@@ -301,7 +301,7 @@ public class FExpandableTextView extends AppCompatTextView
 
         final int end = getBuilder().length();
         final int start = end - textSuffix.length();
-        getBuilder().setSpan(mShrinkClickableSpan, start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        getBuilder().setSpan(mExpandClickableSpan, start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
         setTextInternal(getBuilder());
     }
@@ -309,7 +309,7 @@ public class FExpandableTextView extends AppCompatTextView
     /**
      * 展开状态下的逻辑
      */
-    private void processExpand(int originalLineCount)
+    private void processExpandState(int originalLineCount)
     {
         final String textSuffix = mTextShrink;
         if (TextUtils.isEmpty(textSuffix))
@@ -357,12 +357,12 @@ public class FExpandableTextView extends AppCompatTextView
 
         final int end = getBuilder().length();
         final int start = end - textSuffix.length();
-        getBuilder().setSpan(mExpandClickableSpan, start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        getBuilder().setSpan(mShrinkClickableSpan, start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
         setTextInternal(getBuilder());
     }
 
-    private final ClickableSpan mShrinkClickableSpan = new ClickableSpan()
+    private final ClickableSpan mExpandClickableSpan = new ClickableSpan()
     {
         @Override
         public void updateDrawState(TextPaint ds)
@@ -373,11 +373,11 @@ public class FExpandableTextView extends AppCompatTextView
         @Override
         public void onClick(View widget)
         {
-            toggleState();
+            setState(State.Expand);
         }
     };
 
-    private final ClickableSpan mExpandClickableSpan = new ClickableSpan()
+    private final ClickableSpan mShrinkClickableSpan = new ClickableSpan()
     {
         @Override
         public void updateDrawState(TextPaint ds)
@@ -388,17 +388,9 @@ public class FExpandableTextView extends AppCompatTextView
         @Override
         public void onClick(View widget)
         {
-            toggleState();
+            setState(State.Shrink);
         }
     };
-
-    private void toggleState()
-    {
-        if (mState == State.Expand)
-            setState(State.Shrink);
-        else
-            setState(State.Expand);
-    }
 
     private void setState(State state)
     {
