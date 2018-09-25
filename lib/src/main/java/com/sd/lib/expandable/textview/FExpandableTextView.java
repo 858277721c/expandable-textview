@@ -50,7 +50,7 @@ public class FExpandableTextView extends AppCompatTextView
     private String mTextHideMore = "收起";
 
     private int mTextColorShowMore = Color.BLUE;
-    private int mTextColorHideMore = Color.BLUE;
+    private int mTextColorHideMore = Color.RED;
 
     private boolean mProcess;
 
@@ -279,7 +279,7 @@ public class FExpandableTextView extends AppCompatTextView
 
         final int end = getBuilder().length();
         final int start = end - textSuffix.length();
-        getBuilder().setSpan(mClickableSpan, start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        getBuilder().setSpan(mShrinkClickableSpan, start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
         setTextInternal(getBuilder());
     }
@@ -335,9 +335,47 @@ public class FExpandableTextView extends AppCompatTextView
 
         final int end = getBuilder().length();
         final int start = end - textSuffix.length();
-        getBuilder().setSpan(mClickableSpan, start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        getBuilder().setSpan(mExpandClickableSpan, start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
         setTextInternal(getBuilder());
+    }
+
+    private final ClickableSpan mShrinkClickableSpan = new ClickableSpan()
+    {
+        @Override
+        public void updateDrawState(TextPaint ds)
+        {
+            ds.setColor(mTextColorShowMore);
+        }
+
+        @Override
+        public void onClick(View widget)
+        {
+            toggleState();
+        }
+    };
+
+    private final ClickableSpan mExpandClickableSpan = new ClickableSpan()
+    {
+        @Override
+        public void updateDrawState(TextPaint ds)
+        {
+            ds.setColor(mTextColorHideMore);
+        }
+
+        @Override
+        public void onClick(View widget)
+        {
+            toggleState();
+        }
+    };
+
+    private void toggleState()
+    {
+        if (mState == State.Expand)
+            setState(State.Shrink);
+        else
+            setState(State.Expand);
     }
 
     private void setState(State state)
@@ -348,24 +386,6 @@ public class FExpandableTextView extends AppCompatTextView
             invalidate();
         }
     }
-
-    private final ClickableSpan mClickableSpan = new ClickableSpan()
-    {
-        @Override
-        public void updateDrawState(TextPaint ds)
-        {
-            ds.setColor(Color.BLUE);
-        }
-
-        @Override
-        public void onClick(View widget)
-        {
-            if (mState == State.Expand)
-                setState(State.Shrink);
-            else
-                setState(State.Expand);
-        }
-    };
 
     enum State
     {
