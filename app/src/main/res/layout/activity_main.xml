@@ -10,8 +10,8 @@
         android:text="jfsdfsfjodsjfosi你发的佛is金佛山佛is京东附近搜粉红色佛山佛fjsofjsoifjosjfoshf12182713871301982018201371713183"
         app:ept_limitLine="2"
         app:ept_textColorExpand="#0000FF"
-        app:ept_textColorShrink="#0000FF"
-        app:ept_textExpand="更多"
+        app:ept_textColorShrink="#FF0000"
+        app:ept_textExpand="展开"
         app:ept_textShrink="收起" />
 
 </LinearLayout>
