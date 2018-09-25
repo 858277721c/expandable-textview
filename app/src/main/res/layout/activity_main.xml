@@ -4,7 +4,7 @@
     android:layout_height="match_parent">
 
     <com.sd.lib.expandable.textview.FExpandableTextView
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:text="jfsdfsfjodsjfosi你发的佛is金佛山佛is京东附近搜粉红色佛山佛fjsofjsoifjosjfoshf12182713871301982018201371713183" />
 
