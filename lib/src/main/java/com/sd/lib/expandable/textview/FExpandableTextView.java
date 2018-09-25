@@ -46,7 +46,7 @@ public class FExpandableTextView extends AppCompatTextView
     private BufferType mOriginalBufferType;
 
     private State mState = State.Shrink;
-    private int mLimitLineCount = 2;
+    private int mLimitLineCount;
 
     private String mTextExpand;
     private String mTextShrink;
@@ -65,11 +65,12 @@ public class FExpandableTextView extends AppCompatTextView
         final float textSize = getTextSize();
         getTextView().setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize);
 
+        int limitLine = 2;
         if (attrs != null)
         {
             final TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.libExpandableTextView);
 
-            mLimitLineCount = a.getInt(R.styleable.libExpandableTextView_ept_limitLine, 2);
+            limitLine = a.getInt(R.styleable.libExpandableTextView_ept_limitLine, limitLine);
 
             String textExpand = a.getString(R.styleable.libExpandableTextView_ept_textExpand);
             if (TextUtils.isEmpty(textExpand))
@@ -86,6 +87,8 @@ public class FExpandableTextView extends AppCompatTextView
 
             a.recycle();
         }
+
+        setLimitLineCount(limitLine);
     }
 
     /**
