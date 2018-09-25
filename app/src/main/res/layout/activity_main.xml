@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.sd.lib.expandable.textview.FExpandableTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="jfsdfsfjodsjfosi你发的佛is金佛山佛is京东附近搜粉红色佛山佛fjsofjsoifjosjfoshf12182713871301982018201371713183" />
+
+</LinearLayout>
