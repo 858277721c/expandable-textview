@@ -15,6 +15,7 @@ import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -60,6 +61,9 @@ public class FExpandableTextView extends AppCompatTextView
     {
         setMovementMethod(LinkMovementMethod.getInstance());
         setHighlightColor(Color.TRANSPARENT);
+
+        final float textSize = getTextSize();
+        getTextView().setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize);
 
         if (attrs != null)
         {
