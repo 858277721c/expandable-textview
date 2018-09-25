@@ -18,6 +18,7 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
         android:onClick="onClick"
         android:text="设置文字" />
 
